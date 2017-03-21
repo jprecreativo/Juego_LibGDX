@@ -78,11 +78,11 @@ public class GameScreen extends BaseScreen {
      * it is safe to do critical code here such as loading assets and setting up the stage.
      * @param game
      */
-    public GameScreen(es.danirod.jddprototype.game.MainGame game) {
+    public GameScreen(MainGame game) {
         super(game);
 
         // Create a new Scene2D stage for displaying things.
-        stage = new Stage(new FitViewport(640, 360));
+        stage = new Stage(new FitViewport(1280, 720));
         position = new Vector3(stage.getCamera().position);
 
         // Create a new Box2D world for managing things.
@@ -185,7 +185,7 @@ public class GameScreen extends BaseScreen {
         // moving, make the camera move at the same speed, so that the player is always
         // centered at the same position.
         if (player.getX() > 150 && player.isAlive()) {
-            float speed = Constants.PLAYER_SPEED * delta * Constants.PIXELS_IN_METER;
+            float speed = Constants.PLAYER_SPEED * delta * Constants.PIXELS_IN_METER - Constants.VELOCITY_DIFF;
             stage.getCamera().translate(speed, 0, 0);
         }
 

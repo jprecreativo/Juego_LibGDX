@@ -44,4 +44,9 @@ public class Constants {
      * in the circuit.
      */
     public static final float PLAYER_SPEED = 8f;
+
+    /**
+     * Esta constante es usada para ajustar la velocidad de la cámara a la velocidad del personaje.
+     */
+    public static final float VELOCITY_DIFF = 0.05f;
 }
