@@ -18,6 +18,8 @@
 
 package es.danirod.jddprototype.game;
 
+// uirebkjg
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
