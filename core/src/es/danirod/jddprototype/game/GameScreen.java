@@ -106,21 +106,21 @@ public class GameScreen extends BaseScreen {
         // Create the player. It has an initial position.
         player = factory.createPlayer(world, new Vector2(1.5f, 1.5f));
 
-        // This is the main floor. That is why is so long.
-        floorList.add(factory.createFloor(world, 0, 1000, 1));
+        // Array para las dimesiones de los suelos.
+        int[] coordSuelos = {0,1000,1, 25,10,2, 43,10,2, 90,1,2, 90,1,3, 120,1,2, 120,1,3, 120,1,4, 120,1,5, 120,1,6};
 
-        // Now generate some floors over the main floor. Needless to say, that on a real game
-        // this should be better engineered. For instance, have all the information for floors
-        // and spikes in a data structure or even some level file and generate them without
-        // writing lines of code.
-        floorList.add(factory.createFloor(world, 15, 10, 2));
-        floorList.add(factory.createFloor(world, 30, 8, 2));
+        // Array para las coordenadas de los pinchos.
+        int[] coordPinchos = {8,1, 18,1, 33,2, 48,2, 64,1, 72,1};
 
-        // Generate some spikes too.
-        spikeList.add(factory.createSpikes(world, 8, 1));
-        spikeList.add(factory.createSpikes(world, 23, 2));
-        spikeList.add(factory.createSpikes(world, 35, 2));
-        spikeList.add(factory.createSpikes(world, 50, 1));
+        // añadimos los suelos
+        for (int i = 0; i < coordSuelos.length; i+=3) {
+            floorList.add(factory.createFloor(world, coordSuelos[i], coordSuelos[i+1], coordSuelos[i+2]));
+        }
+
+        // añadimos los pinchos
+        for (int i = 0; i < coordPinchos.length; i+=2) {
+            spikeList.add(factory.createSpikes(world, coordPinchos[i], coordPinchos[i+1]));
+        }
 
         // All add the floors and spikes to the stage.
         for (FloorEntity floor : floorList)
