@@ -34,6 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import es.danirod.jddprototype.game.entities.EntidadMuelle;
+import es.danirod.jddprototype.game.entities.EntidadPelotaBlanca;
 import es.danirod.jddprototype.game.entities.EntityFactory;
 import es.danirod.jddprototype.game.entities.FloorEntity;
 import es.danirod.jddprototype.game.entities.PlayerEntity;
@@ -76,6 +77,8 @@ public class GameScreen extends BaseScreen {
 
     /** Initial position of the camera. Required for reseting the viewport. */
     private Vector3 position;
+
+    private EntidadPelotaBlanca pelotaBlanca;
 
     /**
      * Create the screen. Since this constructor cannot be invoked before libGDX is fully started,
@@ -141,6 +144,9 @@ public class GameScreen extends BaseScreen {
             stage.addActor(spike);
         for(EntidadMuelle muelle : listaMuelles)
             stage.addActor(muelle);
+
+        pelotaBlanca = factory.crearPelotaBlanca(world, 12, 3);
+        stage.addActor(pelotaBlanca);
 
         // Add the player to the stage too.
         stage.addActor(player);
@@ -300,6 +306,12 @@ public class GameScreen extends BaseScreen {
             // el jugador colisiona con un muelle y salta automaticamente con mayor impulso
             if (areCollided(contact, "player", "muelle")) {
                 player.jump((int)(es.danirod.jddprototype.game.Constants.IMPULSE_JUMP * 1.5));
+            }
+
+            if(areCollided(contact, "player", "pelotaBlanca")) {
+
+                pelotaBlanca.remove();
+                player.impulsoPelota();
             }
         }
 

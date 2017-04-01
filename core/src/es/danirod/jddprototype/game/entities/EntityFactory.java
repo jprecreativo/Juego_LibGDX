@@ -80,4 +80,10 @@ public class EntityFactory {
         return new EntidadMuelle(world, texturaMuelle, x, y);
     }
 
+    public EntidadPelotaBlanca crearPelotaBlanca(World world, float x, float y) {
+
+        Texture texturaPelotaBlanca = manager.get("pelotaBlancaPequeña.png");
+
+        return (new EntidadPelotaBlanca(world, texturaPelotaBlanca, x, y));
+    }
 }

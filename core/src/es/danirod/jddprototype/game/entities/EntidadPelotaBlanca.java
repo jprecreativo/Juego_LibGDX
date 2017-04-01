@@ -12,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import es.danirod.jddprototype.game.Constants;
 
 /**
- * Created by jose_ on 28/03/2017.
+ * Created by jose_ on 01/04/2017.
  */
 
-public class EntidadMuelle extends Actor {
+public class EntidadPelotaBlanca extends Actor {
 
     // textura del muelle
     private Texture texture;
@@ -30,7 +30,7 @@ public class EntidadMuelle extends Actor {
     private Fixture fixture;
 
 
-    public EntidadMuelle(World world, Texture texture, float x, float y) {
+    public EntidadPelotaBlanca(World world, Texture texture, float x, float y) {
         this.world = world;
         this.texture = texture;
 
@@ -43,12 +43,12 @@ public class EntidadMuelle extends Actor {
         PolygonShape box = new PolygonShape();
         box.setAsBox(0.1f, 0.1f);
         fixture = body.createFixture(box, 1);
-        fixture.setUserData("muelle");
+        fixture.setUserData("pelotaBlanca");
         box.dispose();
 
         // posicionamos el actor en la pantalla
         setPosition((x - 0.1f) * Constants.PIXELS_IN_METER, y * Constants.PIXELS_IN_METER);
-        setSize(Constants.PIXELS_IN_METER / 5, Constants.PIXELS_IN_METER / 5);
+        setSize(Constants.PIXELS_IN_METER / 3, Constants.PIXELS_IN_METER / 3);
     }
 
     @Override
