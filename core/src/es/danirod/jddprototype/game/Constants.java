@@ -36,7 +36,7 @@ public class Constants {
      * in the opposite direction to make the player fall faster multiplied by some value to make
      * it stronger.
      */
-    public static final int IMPULSE_JUMP = 20;
+    public static final int IMPULSE_JUMP = 25;
 
     /**
      * This is the speed that the player has. The larger this value is, the faster the player will
@@ -44,4 +44,9 @@ public class Constants {
      * in the circuit.
      */
     public static final float PLAYER_SPEED = 8f;
+
+    /**
+     * Esta constante es usada para ajustar la velocidad de la cámara a la velocidad del personaje.
+     */
+    public static final float VELOCITY_DIFF = 0.05f;
 }

@@ -104,13 +104,13 @@ public class PlayerEntity extends Actor {
     public void act(float delta) {
         // Jump when you touch the screen.
         if (Gdx.input.justTouched()) {
-            jump();
+            jump(es.danirod.jddprototype.game.Constants.IMPULSE_JUMP);
         }
 
         // Jump if we were required to jump during a collision.
         if (mustJump) {
             mustJump = false;
-            jump();
+            jump(es.danirod.jddprototype.game.Constants.IMPULSE_JUMP);
         }
 
         // If the player is alive, change the speed so that it moves.
@@ -128,7 +128,7 @@ public class PlayerEntity extends Actor {
         }
     }
 
-    public void jump() {
+    public void jump(int impulso) {
         // The player must not be already jumping and be alive to jump.
         if (!jumping && alive) {
             jumping = true;
@@ -138,7 +138,7 @@ public class PlayerEntity extends Actor {
             // during the jump. We get the position becase we have to apply the impulse
             // at the center of mass of the body.
             Vector2 position = body.getPosition();
-            body.applyLinearImpulse(0, es.danirod.jddprototype.game.Constants.IMPULSE_JUMP, position.x, position.y, true);
+            body.applyLinearImpulse(0, impulso, position.x, position.y, true);
         }
     }
 

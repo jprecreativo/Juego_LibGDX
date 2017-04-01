@@ -75,4 +75,9 @@ public class EntityFactory {
         return new SpikeEntity(world, spikeTexture, x, y);
     }
 
+    public EntidadMuelle creaMuelles(World world, float x, float y) {
+        Texture texturaMuelle = manager.get("muelle.png");
+        return new EntidadMuelle(world, texturaMuelle, x, y);
+    }
+
 }

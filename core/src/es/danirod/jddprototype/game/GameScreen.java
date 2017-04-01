@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import es.danirod.jddprototype.game.entities.EntidadMuelle;
 import es.danirod.jddprototype.game.entities.EntityFactory;
 import es.danirod.jddprototype.game.entities.FloorEntity;
 import es.danirod.jddprototype.game.entities.PlayerEntity;
@@ -61,6 +62,9 @@ public class GameScreen extends BaseScreen {
     /** List of spikes attached to this level. */
     private List<SpikeEntity> spikeList = new ArrayList<SpikeEntity>();
 
+    // lista de muelles en este nivel
+    private List<EntidadMuelle> listaMuelles = new ArrayList<EntidadMuelle>();
+
     /** Jump sound that has to play when the player jumps. */
     private Sound jumpSound;
 
@@ -78,11 +82,11 @@ public class GameScreen extends BaseScreen {
      * it is safe to do critical code here such as loading assets and setting up the stage.
      * @param game
      */
-    public GameScreen(es.danirod.jddprototype.game.MainGame game) {
+    public GameScreen(MainGame game) {
         super(game);
 
         // Create a new Scene2D stage for displaying things.
-        stage = new Stage(new FitViewport(640, 360));
+        stage = new Stage(new FitViewport(1280, 720));
         position = new Vector3(stage.getCamera().position);
 
         // Create a new Box2D world for managing things.
@@ -106,27 +110,37 @@ public class GameScreen extends BaseScreen {
         // Create the player. It has an initial position.
         player = factory.createPlayer(world, new Vector2(1.5f, 1.5f));
 
-        // This is the main floor. That is why is so long.
-        floorList.add(factory.createFloor(world, 0, 1000, 1));
+        // Array para las dimesiones de los suelos.
+        int[] coordSuelos = {0,1000,1, 30,10,2, 48,10,2, 95,1,2, 95,1,3, 125,1,2, 125,1,3, 125,1,4, 125,1,5, 125,1,6};
 
-        // Now generate some floors over the main floor. Needless to say, that on a real game
-        // this should be better engineered. For instance, have all the information for floors
-        // and spikes in a data structure or even some level file and generate them without
-        // writing lines of code.
-        floorList.add(factory.createFloor(world, 15, 10, 2));
-        floorList.add(factory.createFloor(world, 30, 8, 2));
+        // Array para las coordenadas de los pinchos.
+        int[] coordPinchos = {15,1, 23,1, 38,2, 53,2, 69,1, 77,1};
 
-        // Generate some spikes too.
-        spikeList.add(factory.createSpikes(world, 8, 1));
-        spikeList.add(factory.createSpikes(world, 23, 2));
-        spikeList.add(factory.createSpikes(world, 35, 2));
-        spikeList.add(factory.createSpikes(world, 50, 1));
+        // Array para las posiciones de los muelles
+        int[] coordMuelles = {93,1};
 
-        // All add the floors and spikes to the stage.
+        // añadimos los suelos
+        for (int i = 0; i < coordSuelos.length; i+=3) {
+            floorList.add(factory.createFloor(world, coordSuelos[i], coordSuelos[i+1], coordSuelos[i+2]));
+        }
+
+        // añadimos los pinchos
+        for (int i = 0; i < coordPinchos.length; i+=2) {
+            spikeList.add(factory.createSpikes(world, coordPinchos[i], coordPinchos[i+1]));
+        }
+
+        // añadimos los muelles
+        for (int i = 0; i < coordMuelles.length; i+=2) {
+            listaMuelles.add(factory.creaMuelles(world, coordMuelles[i], coordMuelles[i+1]));
+        }
+
+        // añadimos los actores al escenario
         for (FloorEntity floor : floorList)
             stage.addActor(floor);
         for (SpikeEntity spike : spikeList)
             stage.addActor(spike);
+        for(EntidadMuelle muelle : listaMuelles)
+            stage.addActor(muelle);
 
         // Add the player to the stage too.
         stage.addActor(player);
@@ -159,10 +173,13 @@ public class GameScreen extends BaseScreen {
             floor.detach();
         for (SpikeEntity spike : spikeList)
             spike.detach();
+        for(EntidadMuelle muelle : listaMuelles)
+            muelle.detach();
 
         // Clear the lists.
         floorList.clear();
         spikeList.clear();
+        listaMuelles.clear();
     }
 
     /**
@@ -185,7 +202,7 @@ public class GameScreen extends BaseScreen {
         // moving, make the camera move at the same speed, so that the player is always
         // centered at the same position.
         if (player.getX() > 150 && player.isAlive()) {
-            float speed = Constants.PLAYER_SPEED * delta * Constants.PIXELS_IN_METER;
+            float speed = Constants.PLAYER_SPEED * delta * Constants.PIXELS_IN_METER - Constants.VELOCITY_DIFF;
             stage.getCamera().translate(speed, 0, 0);
         }
 
@@ -278,6 +295,11 @@ public class GameScreen extends BaseScreen {
                             )
                     );
                 }
+            }
+
+            // el jugador colisiona con un muelle y salta automaticamente con mayor impulso
+            if (areCollided(contact, "player", "muelle")) {
+                player.jump((int)(es.danirod.jddprototype.game.Constants.IMPULSE_JUMP * 1.5));
             }
         }
 

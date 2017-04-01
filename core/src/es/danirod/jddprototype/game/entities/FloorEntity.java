@@ -84,7 +84,7 @@ public class FloorEntity extends Actor {
 
         // As well as the fixture. Remember, use spike user data to make it act like an enemy.
         PolygonShape leftBox = new PolygonShape();
-        leftBox.setAsBox(0.02f, 0.45f);
+        leftBox.setAsBox(0.02f, 0.50f);
         leftFixture = leftBody.createFixture(leftBox, 1);
         leftFixture.setUserData("spike");
         leftBox.dispose();
