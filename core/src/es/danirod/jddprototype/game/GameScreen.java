@@ -116,13 +116,15 @@ public class GameScreen extends BaseScreen {
         player = factory.createPlayer(world, new Vector2(1.5f, 1.5f));
 
         // Array para las dimesiones de los suelos.
-        int[] coordSuelos = {0,1000,1, 30,10,2, 48,10,2, 95,1,2, 95,1,3, 125,1,2, 125,1,3, 125,1,4, 125,1,5, 125,1,6};
+        int[] coordSuelos = {0,1000,1, 30,10,2, 48,10,2, 95,1,2, 95,1,3, 120,8,2, 150,1,2, 150,1,3, 150,1,4, 150,1,5, 150,1,6,
+                             129,3,4};
 
         // Array para las coordenadas de los pinchos.
-        int[] coordPinchos = {15,1, 23,1, 38,2, 53,2, 69,1, 77,1};
+        int[] coordPinchos = {15,1, 23,1, 38,2, 53,2, 69,1, 77,1, 129,1, 130,1, 131,1, 132,1, 133,1, 134,1, 135,1, 136,1, 137,1,
+                              138,1, 139,1, 140,1};
 
         // Array para las posiciones de los muelles
-        int[] coordMuelles = {93,1};
+        int[] coordMuelles = {93,1, 124,2};
 
         // Array para las posiciones de las pelotas blancas.
         int[] coordPelotasBlancas = {12,3};
