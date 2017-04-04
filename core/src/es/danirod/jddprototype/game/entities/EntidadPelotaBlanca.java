@@ -30,21 +30,23 @@ public class EntidadPelotaBlanca extends Actor {
     private Fixture fixture;
 
 
+
     public EntidadPelotaBlanca(World world, Texture texture, float x, float y) {
         this.world = world;
         this.texture = texture;
+
 
         // creamos el cuerpo
         BodyDef def = new BodyDef();
         def.position.set(x, y + 0.1f);
         body = world.createBody(def);
 
-        // le damos un contorno
-        PolygonShape box = new PolygonShape();
+        // le damos un contorno. está comentado para que traspase el objeto
+        /*PolygonShape box = new PolygonShape();
         box.setAsBox(0.1f, 0.1f);
         fixture = body.createFixture(box, 1);
         fixture.setUserData("pelotaBlanca");
-        box.dispose();
+        box.dispose();*/
 
         // posicionamos el actor en la pantalla
         setPosition((x - 0.1f) * Constants.PIXELS_IN_METER, y * Constants.PIXELS_IN_METER);
@@ -60,4 +62,6 @@ public class EntidadPelotaBlanca extends Actor {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }
+
+
 }

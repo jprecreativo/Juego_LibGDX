@@ -128,12 +128,7 @@ public class PlayerEntity extends Actor {
         }
     }
 
-    public void impulsoPelota() {
 
-        Vector2 pos = body.getPosition();
-
-        body.applyLinearImpulse(20, 1, pos.x, pos.y, true);
-    }
 
     public void jump(int impulso) {
         // The player must not be already jumping and be alive to jump.

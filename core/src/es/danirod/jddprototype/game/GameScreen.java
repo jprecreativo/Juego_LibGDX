@@ -32,6 +32,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
 import es.danirod.jddprototype.game.entities.EntidadMuelle;
 import es.danirod.jddprototype.game.entities.EntidadPelotaBlanca;
@@ -66,6 +67,9 @@ public class GameScreen extends BaseScreen {
     // lista de muelles en este nivel
     private List<EntidadMuelle> listaMuelles = new ArrayList<EntidadMuelle>();
 
+    // Lista de pelotas blancas en esta pantalla.
+    private List<EntidadPelotaBlanca> listaPelotasBlancas = new ArrayList();
+
     /** Jump sound that has to play when the player jumps. */
     private Sound jumpSound;
 
@@ -77,8 +81,6 @@ public class GameScreen extends BaseScreen {
 
     /** Initial position of the camera. Required for reseting the viewport. */
     private Vector3 position;
-
-    private EntidadPelotaBlanca pelotaBlanca;
 
     /**
      * Create the screen. Since this constructor cannot be invoked before libGDX is fully started,
@@ -122,6 +124,9 @@ public class GameScreen extends BaseScreen {
         // Array para las posiciones de los muelles
         int[] coordMuelles = {93,1};
 
+        // Array para las posiciones de las pelotas blancas.
+        int[] coordPelotasBlancas = {12,3};
+
         // añadimos los suelos
         for (int i = 0; i < coordSuelos.length; i+=3) {
             floorList.add(factory.createFloor(world, coordSuelos[i], coordSuelos[i+1], coordSuelos[i+2]));
@@ -137,6 +142,10 @@ public class GameScreen extends BaseScreen {
             listaMuelles.add(factory.creaMuelles(world, coordMuelles[i], coordMuelles[i+1]));
         }
 
+        for(int i = 0; i < coordPelotasBlancas.length; i+=2) {
+            listaPelotasBlancas.add(factory.crearPelotaBlanca(world, coordPelotasBlancas[i], coordPelotasBlancas[i+1]));
+        }
+
         // añadimos los actores al escenario
         for (FloorEntity floor : floorList)
             stage.addActor(floor);
@@ -144,9 +153,8 @@ public class GameScreen extends BaseScreen {
             stage.addActor(spike);
         for(EntidadMuelle muelle : listaMuelles)
             stage.addActor(muelle);
-
-        pelotaBlanca = factory.crearPelotaBlanca(world, 12, 3);
-        stage.addActor(pelotaBlanca);
+        for(EntidadPelotaBlanca pb: listaPelotasBlancas)
+            stage.addActor(pb);
 
         // Add the player to the stage too.
         stage.addActor(player);
@@ -181,11 +189,14 @@ public class GameScreen extends BaseScreen {
             spike.detach();
         for(EntidadMuelle muelle : listaMuelles)
             muelle.detach();
+        //for(EntidadPelotaBlanca pb : listaPelotasBlancas)
+            //pb.detach(); no tenemos que disposearla porque no se creó
 
         // Clear the lists.
         floorList.clear();
         spikeList.clear();
         listaMuelles.clear();
+        listaPelotasBlancas.clear();
     }
 
     /**
@@ -203,6 +214,14 @@ public class GameScreen extends BaseScreen {
 
         // Step the world. This will update the physics and update entity positions.
         world.step(delta, 6, 2);
+
+        // Comprobamos cuando el personaje está cerca de la pelota blanca.
+        if(player.getX() > 10.5 * Constants.PIXELS_IN_METER && player.getX() < 10.8 * Constants.PIXELS_IN_METER &&
+                player.getY() > 1.2 * Constants.PIXELS_IN_METER) {
+            listaPelotasBlancas.get(0).setVisible(false);
+        }
+
+
 
         // Make the camera follow the player. As long as the player is alive, if the player is
         // moving, make the camera move at the same speed, so that the player is always
@@ -308,11 +327,7 @@ public class GameScreen extends BaseScreen {
                 player.jump((int)(es.danirod.jddprototype.game.Constants.IMPULSE_JUMP * 1.5));
             }
 
-            if(areCollided(contact, "player", "pelotaBlanca")) {
 
-                pelotaBlanca.remove();
-                player.impulsoPelota();
-            }
         }
 
         /**
