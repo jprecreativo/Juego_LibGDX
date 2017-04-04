@@ -47,7 +47,7 @@ public class MenuScreen extends BaseScreen {
     private Image logo;
 
     /** The play button you use to jump to the game screen. */
-    private TextButton play, credits;
+    private TextButton play, opciones, credits;
 
     public MenuScreen(final MainGame game) {
         super(game);
@@ -62,8 +62,9 @@ public class MenuScreen extends BaseScreen {
         // For instance, here you see that I create a new button by telling the label of the
         // button as well as the skin file. The background image for the button is in the skin
         // file.
-        play = new TextButton("Play", skin);
-        credits = new TextButton("Credits", skin);
+        play = new TextButton("Jugar", skin);
+        opciones = new TextButton("Opciones", skin);
+        credits = new TextButton("Creditos", skin);
 
         // Also, create an image. Images are actors that only display some texture. Useful if you
         // want to display a texture in a Scene2D based screen but you don't want to rewrite code.
@@ -80,6 +81,13 @@ public class MenuScreen extends BaseScreen {
             }
         });
 
+        opciones.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(game.pantallaOpciones);
+            }
+        });
+
         credits.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -92,12 +100,15 @@ public class MenuScreen extends BaseScreen {
         // buttons the same size.
         logo.setPosition(440 - logo.getWidth() / 2, 320 - logo.getHeight());
         play.setSize(200, 80);
+        opciones.setSize(200, 80);
         credits.setSize(200, 80);
-        play.setPosition(40, 140);
+        play.setPosition(40, 240);
+        opciones.setPosition(40, 140);
         credits.setPosition(40, 40);
 
         // Do not forget to add actors to the stage or we wouldn't see anything.
         stage.addActor(play);
+        stage.addActor(opciones);
         stage.addActor(logo);
         stage.addActor(credits);
     }

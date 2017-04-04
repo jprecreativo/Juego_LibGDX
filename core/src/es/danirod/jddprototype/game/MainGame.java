@@ -39,7 +39,7 @@ public class MainGame extends Game {
      * just public variables. For instance, you could create an ArrayList or maybe use some
      * structure such as a map where you can associate a number or a string to a screen.
      */
-    public BaseScreen loadingScreen, menuScreen, gameScreen, gameOverScreen, creditsScreen;
+    public BaseScreen loadingScreen, menuScreen, gameScreen, gameOverScreen, creditsScreen, pantallaOpciones;
 
     @Override
     public void create() {
@@ -74,6 +74,7 @@ public class MainGame extends Game {
         gameScreen = new GameScreen(this);
         gameOverScreen = new GameOverScreen(this);
         creditsScreen = new CreditsScreen(this);
+        pantallaOpciones = new PantallaOpciones(this);
         setScreen(menuScreen);
     }
 

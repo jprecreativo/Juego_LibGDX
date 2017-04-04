@@ -58,12 +58,23 @@ public class CreditsScreen extends BaseScreen {
         // For instance, here you see that I create a new button by telling the label of the
         // button as well as the skin file. The background image for the button is in the skin
         // file.
-        back = new TextButton("Back", skin);
+        back = new TextButton("Atras", skin);
 
-        credits = new Label("Jump Don't Die v1.0.2\n" +
+        /*credits = new Label("Jump Don't Die v1.0.2\n" +
                 "Copyright (C) 2015-2016 Dani Rodriguez\n" +
                 "This game is GNU GPL. Get the code at github.com/danirod/JumpDontDie\n\n" +
 
+                "Music: \"Long Time Coming\" Kevin MacLeod (incompetech.com)\n" +
+                "Licensed under Creative Commons: By Attribution 3.0", skin);*/
+
+        credits = new Label("Jump Don´t Die.\n" +
+                "Videojuego en 2D para dispositivos moviles Android\n" +
+                "mediante el uso de la libreria libGDX.\n" +
+                "Practica realizada para la asignatura Programacion de Juegos por:\n" +
+                "Jose Francisco Prieto Montes y David Toscano Rodriguez.\n" +
+                "Este juego es una ampliacion de otro que puedes descargar en:\n" +
+                "github.com/danirod/JumpDontDie\n" +
+                "Copyright (C) 2015-2016 Dani Rodriguez\n" +
                 "Music: \"Long Time Coming\" Kevin MacLeod (incompetech.com)\n" +
                 "Licensed under Creative Commons: By Attribution 3.0", skin);
 
@@ -83,7 +94,7 @@ public class CreditsScreen extends BaseScreen {
         // buttons the same size.
         credits.setPosition(20, 340 - credits.getHeight());
         back.setSize(200, 80);
-        back.setPosition(40, 50);
+        back.setPosition(40, 40);
 
         // Do not forget to add actors to the stage or we wouldn't see anything.
         stage.addActor(back);

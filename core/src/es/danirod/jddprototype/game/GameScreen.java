@@ -166,7 +166,7 @@ public class GameScreen extends BaseScreen {
         stage.getCamera().update();
 
         // Everything is ready, turn the volume up.
-        backgroundMusic.setVolume(0.75f);
+        backgroundMusic.setVolume(VariablesGlobales.volumen);
         backgroundMusic.play();
     }
 
