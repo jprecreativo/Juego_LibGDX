@@ -50,7 +50,7 @@ public class LoadingScreen extends BaseScreen {
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
         // Create some loading text using this skin file and position it on screen.
-        loading = new Label("Loading...", skin);
+        loading = new Label("Cargando...", skin);
         loading.setPosition(320 - loading.getWidth() / 2, 180 - loading.getHeight() / 2);
         stage.addActor(loading);
     }
@@ -73,7 +73,7 @@ public class LoadingScreen extends BaseScreen {
             // getProgress() returns the progress of the load in a range of [0,1]. We multiply
             // this progress per * 100 so that we can display it as a percentage.
             int progress = (int) (game.getManager().getProgress() * 100);
-            loading.setText("Loading... " + progress + "%");
+            loading.setText("Cargando... " + progress + "%");
         }
 
         stage.act();
